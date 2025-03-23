@@ -1,0 +1,56 @@
+ <!-- Class Section Begin -->
+ <section class="class spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="class__form">
+                    <div class="section-title">
+                        <span>Class cakes</span>
+                        <h2>Made from your <br />own hands</h2>
+                    </div>
+                    <!-- <form [formGroup]="form" (ngSubmit)="ajouter()"> -->
+                      <form [formGroup]="form">
+                      
+                        <mat-form-field appearance="fill">
+                          <mat-label>Titre</mat-label>
+                          <input matInput formControlName="titleart">
+                        </mat-form-field>
+                      
+                        <mat-form-field appearance="fill">
+                          <mat-label>Description</mat-label>
+                          <textarea matInput formControlName="descriptionart"></textarea>
+                        </mat-form-field>
+                      
+                        <mat-form-field appearance="fill">
+                          <mat-label>Prix</mat-label>
+                          <input matInput formControlName="prix" type="number">
+                        </mat-form-field>
+                      
+                        <mat-form-field appearance="fill">
+                          <mat-label>URL de l'image</mat-label>
+                          <input matInput formControlName="imageUrl" type="text">
+                        </mat-form-field>
+                      
+                        <mat-form-field appearance="fill">
+                          <mat-label>Catégorie</mat-label>
+                          <input matInput formControlName="IdCat" type="number">
+                        </mat-form-field>
+                      
+                        <mat-form-field appearance="fill">
+                          <mat-label>Quantité en stock</mat-label>
+                          <input matInput formControlName="quantiteStock" type="number">
+                        </mat-form-field>
+                        <button class="mat-raised-button"(click)="close()">Close</button>
+                        <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+                        <!-- <button mat-raised-button color="primary" type="submit" >
+                          Ajouter l'article
+                        </button> -->
+                      </form>
+                      
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+<!-- Class Section End -->
