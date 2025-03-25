@@ -1,8 +1,8 @@
 export interface ArticlePanier {
-    IdPanier: number;
-    Qte: number;
-    Idart: BigInt;
-    PrixUnitaire: number;
-    PrixTotalLg: number;
+    idPanier: number;
+    qte: number;
+    idart: number;
+    prixUnitaire: number;
+    prixTotalLg: number;
   }
   

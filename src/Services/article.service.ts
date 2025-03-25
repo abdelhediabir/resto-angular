@@ -33,4 +33,7 @@ export class ArticleService {
   {
     return this.http.put<void> (`https://localhost:7163/api/Article/${idart}`,article)
   }
+  getArticleDetails(idart: number): Observable<any> {
+    return this.http.get<any>(`https://localhost:7163/api/Article/${idart}`);
+  }
 }
