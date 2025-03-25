@@ -19,6 +19,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { LoginComponent } from './login/login.component';
 import { ShopComponent } from './shop/shop.component';
+import { CartComponent } from './cart/cart.component';
+import { MatTableModule } from '@angular/material/table';  // Importer MatTableModule
+
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -31,7 +35,8 @@ import { ShopComponent } from './shop/shop.component';
     ArticleFormComponent,
     ConfirmDialogComponent,
     LoginComponent,
-    ShopComponent
+    ShopComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,7 @@ import { ShopComponent } from './shop/shop.component';
     MatIconModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,MatPaginatorModule,MatTableModule
 
     
   ],

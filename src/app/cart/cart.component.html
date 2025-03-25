@@ -1,0 +1,55 @@
+<section class="shopping-cart spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="shopping__cart__table" *ngIf="cartItems && cartItems.length > 0; else noItems">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cartItems">
+                <td class="product__cart__item">
+                  <div class="product__cart__item__pic">
+                    <!-- Affichage de l'image avec une taille spécifique -->
+                    <img [src]="item.imageUrl || 'assets/images/default.jpg'" alt="Image du produit" style="width: 100px; height: 100px; object-fit: cover;">
+                  </div>
+                  <div class="product__cart__item__text">
+                    <h6>{{ item.titleart }}</h6>
+                    <h5>{{ item.prixUnitaire | currency }}</h5>
+                  </div>
+                </td>
+                <td class="quantity__item">
+                  <div class="quantity">
+                    <div class="pro-qty">
+                      <input type="number" [(ngModel)]="item.qte" min="1">
+                    </div>
+                  </div>
+                </td>
+                <td class="cart__price">{{ item.prixTotalLg | currency }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noItems>
+          <p>Aucun produit dans le panier.</p>
+        </ng-template>
+      </div>
+      <div class="col-lg-4">
+        
+        <div class="cart__total">
+          <h6>Cart total</h6>
+          <ul>
+            
+            <li>Total <span>{{ cartTotal | currency }}</span></li>
+          </ul>
+          <a href="#" class="primary-btn">Proceed to checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from 'src/Modeles/User';
+import { jwtDecode } from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root',
@@ -30,17 +32,34 @@ export class AuthService {
 
   // Méthode pour récupérer le token JWT depuis le localStorage
   getToken(): string | null {
-    return localStorage.getItem('jwt');
+    return localStorage.getItem('jwt')|| sessionStorage.getItem('jwt');
   }
-
-  // Méthode pour récupérer les informations utilisateur depuis le localStorage
-  getUser(): any {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null; // Récupère et parse les informations utilisateur
-  }
+  
 
   // Méthode pour vérifier si l'utilisateur est authentifié
   isAuthenticated(): boolean {
     return this.getToken() !== null; // Si le token est présent, l'utilisateur est authentifié
   }
+  
+
+  // Décode le token JWT
+  decodeToken(): any {
+    const token = this.getToken();
+    if (token) {
+      try {
+        return jwtDecode(token);
+      } catch (error) {
+        console.error("Erreur lors du décodage du token", error);
+        return null;
+      }
+    }
+    return null;
+  }
+  getUserIdFromToken(): string | null {
+    const decodedToken = this.decodeToken();
+    if (!decodedToken) return null;
+  
+    return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
+  }
+
 }

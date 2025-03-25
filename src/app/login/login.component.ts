@@ -22,8 +22,7 @@ export class LoginComponent implements OnInit {
       rememberMe: new FormControl(false)
     });
 
-    // Vérifier si un utilisateur est déjà connecté
-    this.loggedInUser = this.authService.getUser();
+   
   }
 
   login(): void {
@@ -41,12 +40,12 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('panierId',response.panierId);
          
           }
-
+          
           // Redirection et mise à jour des données
           console.log(response.token);
           console.log('user',response.panierId);
-          console.log()
-          this.loggedInUser = response.user;
+          console.log('decode',this.authService.getUserIdFromToken())
+          
           this.router.navigate(['/']);
         },
         (error) => {

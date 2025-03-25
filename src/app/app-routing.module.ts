@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { ArticleFormComponent } from './article-form/article-form.component';
 import { LoginComponent } from './login/login.component';
 import { ShopComponent } from './shop/shop.component';
+import { CartService } from 'src/Services/cart.service';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {
@@ -37,6 +39,11 @@ const routes: Routes = [
   path:'shop',
   pathMatch:'full',
   component:ShopComponent
+ },
+ {
+  path:'cart',
+  pathMatch:'full',
+  component:CartComponent
  }
 
 
