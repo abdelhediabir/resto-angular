@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';  // Ajouter ActivatedRoute ici
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/Services/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});  
   loggedInUser: any = null;  
   errorMessage: string = '';  // Stocke les erreurs d’authentification
+  
+  message: string = '';  // Stocke le message passé dans l'URL
 
-  constructor(private authService: AuthService, private router: Router) {}
+
+  constructor(private authService: AuthService,private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -22,8 +26,13 @@ export class LoginComponent implements OnInit {
       rememberMe: new FormControl(false)
     });
 
-   
-  }
+   // Récupérer le message de l'URL si disponible
+   this.route.queryParams.subscribe(params => {
+    if (params['message']) {
+      this.message = params['message'];  // Mettre à jour le message
+    }
+  });
+}
 
   login(): void {
     if (this.loginForm.valid) {
@@ -34,18 +43,21 @@ export class LoginComponent implements OnInit {
           if (this.loginForm.value.rememberMe) {
             localStorage.setItem('jwt', response.token);
             localStorage.setItem('panierId',response.panierId);
+            localStorage.setItem('role', response.role);  // Stocke le rôle
             
           } else {
             sessionStorage.setItem('jwt', response.token);
             localStorage.setItem('panierId',response.panierId);
-         
+            localStorage.setItem('role', response.role);  // Stocke le rôle
           }
           
           // Redirection et mise à jour des données
           console.log(response.token);
+          console.log('Token décodé:', this.authService.decodeToken());
+          console.log('Rolelocal:', response.role);  
           console.log('user',response.panierId);
           console.log('decode',this.authService.getUserIdFromToken())
-          
+          console.log('role',this.authService.getUserroleFromToken())
           this.router.navigate(['/']);
         },
         (error) => {

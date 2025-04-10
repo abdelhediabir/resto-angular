@@ -55,11 +55,20 @@ export class AuthService {
     }
     return null;
   }
+
+  
   getUserIdFromToken(): string | null {
     const decodedToken = this.decodeToken();
     if (!decodedToken) return null;
   
     return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
   }
+  getUserroleFromToken(): string | null {
+    const decodedToken = this.decodeToken();
+    if (!decodedToken) return null;
+  
+    return decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || null;
+  }
+  
 
 }

@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { ShopComponent } from './shop/shop.component';
 import { CartService } from 'src/Services/cart.service';
 import { CartComponent } from './cart/cart.component';
+import { CommandeclientComponent } from './commandeclient/commandeclient.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,11 @@ const routes: Routes = [
   pathMatch:'full',
   component:ShopComponent
  },
+{
+   path:'mescommandes',
+   pathMatch:'full',
+   component:CommandeclientComponent
+},
  {
   path:'cart',
   pathMatch:'full',

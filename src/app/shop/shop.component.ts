@@ -4,6 +4,8 @@ import { CartService } from 'src/Services/cart.service';
 import { ArticleService } from 'src/Services/article.service';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/Services/auth.service';
+import { Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-shop',
@@ -14,7 +16,11 @@ export class ShopComponent implements OnInit {
   articles: Article[] = []; // Liste des articles
   quantities: { [key: string]: number } = {}; // Dictionnaire des quantités par article
 
-  constructor(private AS: ArticleService, private CS: CartService,private authS: AuthService) {}
+  constructor(private AS: ArticleService,
+     private CS: CartService,
+     private authS: AuthService,
+     private router: Router,
+       ) {}
 
   ngOnInit(): void {
     this.fetchData(); // Récupérer les articles au chargement du composant
@@ -42,44 +48,52 @@ export class ShopComponent implements OnInit {
 
   // Fonction pour ajouter un article au panier
   addToCart(article: Article) {
-    let quantity = this.quantities[article.idart.toString()];
-    // Convertir la quantité en nombre (en cas de chaîne de caractères)
-    quantity = Number(quantity);
-  
-    // Vérifiez que la quantité est valide (supérieure à 0)
-    if (!quantity || quantity <= 0) {
-      console.error('La quantité doit être supérieure à zéro');
+    // Vérifier si l'utilisateur est authentifié
+    if (!this.authS.isAuthenticated()) {
+      this.router.navigate(['/login'], { queryParams: { message: 'Veuillez vous connecter pour ajouter un article au panier.' } });
       return;
     }
   
-    // Créez l'objet LignePanierDTO à envoyer au backend
+    let quantity = Number(this.quantities[article.idart.toString()]);
+    if (!quantity || quantity <= 0) {
+      alert("La quantité doit être supérieure à zéro");
+      return;
+    }
+  
     const panierDTO = {
-      idPanier: this.getIdPanier(), // ID du panier
-      qte: quantity, // Quantité choisie par l'utilisateur
-      idart: article.idart, // ID de l'article
+      idPanier: this.getIdPanier(),
+      qte: quantity,
+      idart: article.idart,
       prixUnitaire: article.prix,
       prixTotalLg: article.prix * quantity
-    }
-
-    console.log("Données envoyées :", panierDTO);
-    
-    // Récupérer le token JWT et l'ID de l'utilisateur
-    const token = this.authS.getToken(); // Récupérer le token JWT
+    };
+  
+    const token = this.authS.getToken();
     const headers = {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     };
-
+  
     this.CS.addToCart(panierDTO, { headers }).subscribe(
       () => {
-        console.log('Article ajouté au panier avec succès');
-        console.log(this.authS.getUserIdFromToken())
+        alert("Article ajouté au panier avec succès !");
       },
       (error) => {
-        console.error('Erreur lors de l\'ajout au panier:', error);
+        if (error.status === 401) {
+          // Token expiré ou non valide
+          alert("Votre session est terminée. Veuillez vous reconnecter.");
+          this.authS.logout();  // Déconnecter l'utilisateur si nécessaire
+          this.router.navigate(['/login'], { queryParams: { message: 'Votre session est terminée, reconnectez-vous.' } });
+        } else {
+          alert("Erreur lors de l'ajout au panier !");
+          console.error(error);
+        }
       }
     );
   }
-
+  
+  
+  
+  
   
 }

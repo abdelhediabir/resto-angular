@@ -8,6 +8,9 @@
     </ul>
     <button mat-raised-button color="warn" (click)="logout()">Se déconnecter</button>
   </div>
+  <div *ngIf="message" class="alert alert-warning">
+    {{ message }}
+  </div>
   
   <ng-template #loginFormContent>
     <form [formGroup]="loginForm" (ngSubmit)="login()">

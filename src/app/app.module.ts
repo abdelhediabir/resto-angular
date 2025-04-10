@@ -23,6 +23,9 @@ import { CartComponent } from './cart/cart.component';
 import { MatTableModule } from '@angular/material/table';  // Importer MatTableModule
 
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ToastrModule } from 'ngx-toastr';
+import { CommandeclientComponent } from './commandeclient/commandeclient.component';
+
 
 
 @NgModule({
@@ -36,7 +39,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ConfirmDialogComponent,
     LoginComponent,
     ShopComponent,
-    CartComponent
+    CartComponent,
+    CommandeclientComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    FormsModule,MatPaginatorModule,MatTableModule
+    FormsModule,MatPaginatorModule,MatTableModule,
+    ToastrModule.forRoot(), 
 
     
   ],
